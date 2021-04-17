@@ -10,12 +10,12 @@ export default class Engine {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.objects = [];
-        this.world = new World(this.screenWidth, this.screenHeight);
+        this.world = new World(this.screenWidth, this.screenHeight, 100, 1, "#FFF");
         this.state = ENGINESTATE.TOSTART;
         new InputHandler(this);
     }
-    createWorld(e, c) {
-        this.world = new World(this.screenWidth, this.screenHeight, e, c);
+    createWorld(g = 1000, e = 1, c = "#FFF") {
+        this.world = new World(this.screenWidth, this.screenHeight, g, e, c);
     }
     addTestObject(name) {
         const n = name;
@@ -50,6 +50,10 @@ export default class Engine {
     start() {
         if (this.state === ENGINESTATE.TOSTART)
             this.state = ENGINESTATE.RUNNING;
+        //Add Gravity
+        this.objects.forEach((object) => {
+            object.a.y += this.world.g;
+        });
     }
     togglePause() {
         if (this.state === ENGINESTATE.RUNNING)

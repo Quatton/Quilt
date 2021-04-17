@@ -11,7 +11,7 @@ const engine = new Engine(ELEMENT.SCREEN.width, ELEMENT.SCREEN.height);
 //Create Object and World
 for (let i = 0; i < 10; i++)
     engine.addTestObject((i + 1).toString());
-engine.createWorld(0.5, "#DDDDDD");
+engine.createWorld(1000, 0.2, "#DDDDDD");
 // Loop Start
 let lastTime = 0;
 function animation(timestamp) {
