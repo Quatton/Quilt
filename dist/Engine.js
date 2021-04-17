@@ -35,7 +35,7 @@ export default class Engine {
             const testSquare = new PhysicsObject(n, {
                 x: Math.random() * (ELEMENT.SCREEN.width - w),
                 y: Math.random() * (ELEMENT.SCREEN.height - w),
-            }, { x: w + Math.random() * 10, y: w * Math.random() * 10 }, { x: 0, y: 0 }, { w: w, h: w, color: color }, 10 + Math.random() * w ** 2 * 5);
+            }, { x: w + Math.random() * 10, y: w * Math.random() * 10 }, { x: 0, y: 0 }, { w: w, h: w, color: color }, w ** 2);
             collision = false;
             this.objects.forEach((object) => {
                 collision = collision || collDetectObjObj(object, testSquare);

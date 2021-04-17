@@ -61,7 +61,7 @@ export default class Engine {
         { x: w + Math.random() * 10, y: w * Math.random() * 10 },
         { x: 0, y: 0 },
         { w: w, h: w, color: color },
-        10 + Math.random() * w ** 2 * 5
+        w ** 2
       );
 
       collision = false;

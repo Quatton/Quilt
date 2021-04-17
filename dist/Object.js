@@ -35,9 +35,9 @@ export default class PhysicsObject {
             return;
         ctx.fillStyle = this.s.color;
         ctx.fillRect(this.p.x, this.p.y, this.s.w, this.s.h);
-        ctx.font = `${this.s.w}px Arial`;
+        ctx.font = `800 ${this.s.w / 5}px Arial`;
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText(this.name, this.p.x + this.s.w / 2, this.p.y + this.s.h / 1.2);
+        ctx.fillText("｡◕‿◕｡", this.p.x + this.s.w / 2, this.p.y + this.s.h / 1.5);
     }
 }

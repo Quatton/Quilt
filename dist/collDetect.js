@@ -43,7 +43,7 @@ export function collDetectObjObj(object1, object2) {
             object1.p.x = coll2.right;
     }
     else {
-        side = 3 + Math.sign(HOZ);
+        side = 3 + Math.sign(VER);
         if (Math.sign(VER) < 0)
             //TOP
             object1.p.y = coll2.top - object1.s.h;

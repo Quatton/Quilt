@@ -23,7 +23,7 @@ export function momentumConservObjObj(o1, o2, side, e = 1) {
     return;
 }
 export function momentumConservObjWorld(obj, world, side, e = 1) {
-    if (!obj.bouncing || side === SIDE.NONE)
+    if (side === SIDE.NONE)
         return;
     if (e > 1 || e < 0)
         e = 1;
@@ -40,7 +40,6 @@ export function momentumConservObjWorld(obj, world, side, e = 1) {
             obj.p.x = 0;
         else
             obj.p.x = world.right - obj.s.w;
-        obj.bouncing = true;
         obj.v.x = -obj.v.x * e;
         return;
     }
