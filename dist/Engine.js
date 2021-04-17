@@ -14,8 +14,8 @@ export default class Engine {
         this.state = ENGINESTATE.TOSTART;
         new InputHandler(this);
     }
-    createWorld(e) {
-        this.world = new World(this.screenWidth, this.screenHeight, e);
+    createWorld(e, c) {
+        this.world = new World(this.screenWidth, this.screenHeight, e, c);
     }
     addTestObject(name) {
         const n = name;
@@ -70,7 +70,14 @@ export default class Engine {
         }
     }
     draw(ctx) {
+        // Draw BG
+        ctx.fillStyle = this.world.fill;
+        console.log(this.world.fill);
+        ctx.rect(0, 0, ELEMENT.SCREEN.width, ELEMENT.SCREEN.height);
+        ctx.fill();
+        // Draw Object
         this.objects.forEach((object) => object.draw(ctx));
+        // Draw Paused Screen Overlay
         if (this.state !== ENGINESTATE.RUNNING) {
             ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
             ctx.rect(0, 0, ELEMENT.SCREEN.width, ELEMENT.SCREEN.height);

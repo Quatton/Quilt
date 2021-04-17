@@ -6,7 +6,7 @@ import { ELEMENT } from "./globalConst.js";
 const ASPECT_RATIO: number = 1;
 
 // ELEMENT.SCREEN Settings
-ELEMENT.SCREEN.width = 400;
+ELEMENT.SCREEN.width = 600;
 ELEMENT.SCREEN.height = ELEMENT.SCREEN.width * ASPECT_RATIO;
 
 const ctx: CanvasRenderingContext2D = ELEMENT.SCREEN.getContext("2d");
@@ -15,8 +15,8 @@ const ctx: CanvasRenderingContext2D = ELEMENT.SCREEN.getContext("2d");
 const engine = new Engine(ELEMENT.SCREEN.width, ELEMENT.SCREEN.height);
 
 //Create Object and World
-for (let i = 0; i < 5; i++) engine.addTestObject((i + 1).toString());
-engine.createWorld(0.5);
+for (let i = 0; i < 10; i++) engine.addTestObject((i + 1).toString());
+engine.createWorld(0.5, "#DDDDDD");
 
 // Loop Start
 let lastTime: number = 0;
