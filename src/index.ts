@@ -11,12 +11,13 @@ ELEMENT.SCREEN.height = ELEMENT.SCREEN.width * ASPECT_RATIO;
 
 const ctx: CanvasRenderingContext2D = ELEMENT.SCREEN.getContext("2d");
 
-// Create Engine
 const engine = new Engine(ELEMENT.SCREEN.width, ELEMENT.SCREEN.height);
+
+// Listen for reset Event
 
 //Create Object and World
 for (let i = 0; i < 10; i++) engine.addTestObject((i + 1).toString());
-engine.createWorld(1000, 0.2, "#DDDDDD");
+engine.createWorld(1000, 0.9, "#DDDDDD");
 
 // Loop Start
 let lastTime: number = 0;

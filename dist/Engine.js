@@ -9,12 +9,18 @@ export default class Engine {
     constructor(screenWidth, screenHeight) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
+        this.initialState = [];
         this.objects = [];
         this.world = new World(this.screenWidth, this.screenHeight, 100, 1, "#FFF");
         this.state = ENGINESTATE.TOSTART;
         new InputHandler(this);
     }
-    createWorld(g = 1000, e = 1, c = "#FFF") {
+    reset() {
+        this.state = ENGINESTATE.TOSTART;
+        this.objects = [];
+        this.initialState.forEach((object) => this.objects.push(object.clone()));
+    }
+    createWorld(g = 100, e = 1, c = "#FFF") {
         this.world = new World(this.screenWidth, this.screenHeight, g, e, c);
     }
     addTestObject(name) {
@@ -24,12 +30,12 @@ export default class Engine {
         let collision = true;
         setTimeout(() => {
             collision = false;
-        }, 100);
+        }, 1000);
         while (collision) {
             const testSquare = new PhysicsObject(n, {
                 x: Math.random() * (ELEMENT.SCREEN.width - w),
                 y: Math.random() * (ELEMENT.SCREEN.height - w),
-            }, { x: w + Math.random() * 10, y: w * Math.random() * 10 }, { x: 0, y: 0 }, { w: w, h: w, color: color }, 10);
+            }, { x: w + Math.random() * 10, y: w * Math.random() * 10 }, { x: 0, y: 0 }, { w: w, h: w, color: color }, 10 + Math.random() * w ** 2 * 5);
             collision = false;
             this.objects.forEach((object) => {
                 collision = collision || collDetectObjObj(object, testSquare);
@@ -45,14 +51,15 @@ export default class Engine {
         }
     }
     addObject(object) {
-        this.objects.push(object);
+        this.initialState.push(object);
+        this.objects.push(object.clone());
     }
     start() {
         if (this.state === ENGINESTATE.TOSTART)
             this.state = ENGINESTATE.RUNNING;
         //Add Gravity
         this.objects.forEach((object) => {
-            object.a.y += this.world.g;
+            object.a.y = this.world.g;
         });
     }
     togglePause() {
@@ -76,7 +83,6 @@ export default class Engine {
     draw(ctx) {
         // Draw BG
         ctx.fillStyle = this.world.fill;
-        console.log(this.world.fill);
         ctx.rect(0, 0, ELEMENT.SCREEN.width, ELEMENT.SCREEN.height);
         ctx.fill();
         // Draw Object

@@ -7,3 +7,14 @@ export function combo(arr: Array<PhysicsObject>): Array<Array<PhysicsObject>> {
 
   return res;
 }
+
+export function clone(obj: any): any {
+  if (typeof obj !== "object") return obj;
+  if (obj instanceof Object) {
+    let copy = {};
+    for (const [key, value] of Object.entries(obj)) {
+      copy = Object.assign(copy, { [key]: clone(value) });
+    }
+    return copy;
+  }
+}

@@ -11,6 +11,8 @@ export default class InputHandler {
           break;
         default:
           break;
+        case 27:
+          if (engine.state !== ENGINESTATE.TOSTART) engine.reset();
       }
     });
   }

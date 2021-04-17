@@ -9,7 +9,7 @@ export function momentumConservObjObj(o1, o2, side, e = 1) {
     const ux2 = o2.v.x;
     const uy1 = o1.v.y;
     const uy2 = o2.v.y;
-    const Ei = m1 * Math.pow(o1.v.x, 2) + m2 * Math.pow(o2.v.x, 2) + m1 * Math.pow(o1.v.y, 2) + m2 * Math.pow(o2.v.y, 2);
+    const Ei = m1 * o1.v.x ** 2 + m2 * o2.v.x ** 2 + m1 * o1.v.y ** 2 + m2 * o2.v.y ** 2;
     let vx1;
     if (side === SIDE.LEFT || side === SIDE.RIGHT) {
         o1.v.x = ((m1 - m2) * ux1 + 2 * m2 * ux2) / (m1 + m2);
@@ -19,7 +19,7 @@ export function momentumConservObjObj(o1, o2, side, e = 1) {
         o1.v.y = ((m1 - m2) * ux1 + 2 * m2 * uy2) / (m1 + m2);
         o2.v.y = ((m2 - m1) * ux2 + 2 * m1 * uy1) / (m1 + m2);
     }
-    const Ef = m1 * Math.pow(o1.v.x, 2) + m2 * Math.pow(o2.v.x, 2) + m1 * Math.pow(o1.v.y, 2) + m2 * Math.pow(o2.v.y, 2);
+    const Ef = m1 * o1.v.x ** 2 + m2 * o2.v.x ** 2 + m1 * o1.v.y ** 2 + m2 * o2.v.y ** 2;
     return;
 }
 export function momentumConservObjWorld(obj, world, side, e = 1) {

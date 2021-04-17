@@ -7,7 +7,7 @@ import {
   momentumConservObjObj,
   momentumConservObjWorld,
 } from "./physicsUtil.js";
-import { combo } from "./util.js";
+import { combo, clone } from "./util.js";
 import { ENGINESTATE } from "./globalConst.js";
 import InputHandler from "./input.js";
 
@@ -17,11 +17,13 @@ export default class Engine {
   objects: Array<PhysicsObject>;
   world: World;
   state: number;
+  initialState: Array<PhysicsObject>;
 
   constructor(screenWidth: number, screenHeight: number) {
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
 
+    this.initialState = [];
     this.objects = [];
     this.world = new World(this.screenWidth, this.screenHeight, 100, 1, "#FFF");
     this.state = ENGINESTATE.TOSTART;
@@ -29,7 +31,13 @@ export default class Engine {
     new InputHandler(this);
   }
 
-  createWorld(g: number = 1000, e: number = 1, c: string = "#FFF") {
+  reset() {
+    this.state = ENGINESTATE.TOSTART;
+    this.objects = [];
+    this.initialState.forEach((object) => this.objects.push(object.clone()));
+  }
+
+  createWorld(g: number = 100, e: number = 1, c: string = "#FFF") {
     this.world = new World(this.screenWidth, this.screenHeight, g, e, c);
   }
 
@@ -41,7 +49,7 @@ export default class Engine {
     let collision = true;
     setTimeout(() => {
       collision = false;
-    }, 100);
+    }, 1000);
 
     while (collision) {
       const testSquare = new PhysicsObject(
@@ -53,7 +61,7 @@ export default class Engine {
         { x: w + Math.random() * 10, y: w * Math.random() * 10 },
         { x: 0, y: 0 },
         { w: w, h: w, color: color },
-        10
+        10 + Math.random() * w ** 2 * 5
       );
 
       collision = false;
@@ -76,7 +84,8 @@ export default class Engine {
   }
 
   addObject(object: PhysicsObject) {
-    this.objects.push(object);
+    this.initialState.push(object);
+    this.objects.push(object.clone());
   }
 
   start() {
@@ -84,7 +93,7 @@ export default class Engine {
 
     //Add Gravity
     this.objects.forEach((object) => {
-      object.a.y += this.world.g;
+      object.a.y = this.world.g;
     });
   }
 
@@ -112,7 +121,6 @@ export default class Engine {
   draw(ctx: CanvasRenderingContext2D) {
     // Draw BG
     ctx.fillStyle = this.world.fill;
-    console.log(this.world.fill);
     ctx.rect(0, 0, ELEMENT.SCREEN.width, ELEMENT.SCREEN.height);
     ctx.fill();
 

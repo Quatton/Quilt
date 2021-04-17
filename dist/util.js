@@ -5,3 +5,14 @@ export function combo(arr) {
             res.push([arr[i], arr[j]]);
     return res;
 }
+export function clone(obj) {
+    if (typeof obj !== "object")
+        return obj;
+    if (obj instanceof Object) {
+        let copy = {};
+        for (const [key, value] of Object.entries(obj)) {
+            copy = Object.assign(copy, { [key]: clone(value) });
+        }
+        return copy;
+    }
+}

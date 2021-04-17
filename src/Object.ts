@@ -1,5 +1,6 @@
 import { Point } from "./Coord.js";
 import { ELEMENT } from "./globalConst.js";
+import { clone } from "./util.js";
 
 interface Shape {
   color: string;
@@ -25,10 +26,6 @@ export default class PhysicsObject {
   a: Point;
   m: number;
   s: Rectangle; //for now
-  bouncing: boolean;
-
-  screenWidth: number;
-  screenHeight: number;
 
   constructor(
     name: string,
@@ -44,9 +41,6 @@ export default class PhysicsObject {
     this.a = acceleration;
     this.s = shape;
     this.m = mass;
-    this.screenWidth = ELEMENT.SCREEN.width;
-    this.screenHeight = ELEMENT.SCREEN.height;
-    this.bouncing = false;
     // if (true) {
     //     //Check if Rectangle but idk how
     //     this.c = {
@@ -58,6 +52,16 @@ export default class PhysicsObject {
     // }
   }
 
+  clone() {
+    return new PhysicsObject(
+      this.name,
+      { ...this.p },
+      { ...this.v },
+      { ...this.a },
+      { ...this.s },
+      this.m
+    );
+  }
   update(dt: number) {
     dt /= 1000;
     this.p.x += this.v.x * dt;
@@ -70,9 +74,9 @@ export default class PhysicsObject {
   draw(ctx: CanvasRenderingContext2D) {
     if (
       this.p.x + this.s.w < 0 ||
-      this.p.x > this.screenWidth ||
+      this.p.x > ELEMENT.SCREEN.width ||
       this.p.y + this.s.h < 0 ||
-      this.p.y > this.screenHeight
+      this.p.y > ELEMENT.SCREEN.height
     )
       return;
     ctx.fillStyle = this.s.color;
